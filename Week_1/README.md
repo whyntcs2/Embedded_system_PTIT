@@ -1,4 +1,5 @@
-Video minh chứng BT_1:
-Video minh chứng BT_2:
-Video minh chứng BT_3:
-Video minh chứng BT_4:
+- Video minh chứng BT_1_a: https://youtube.com/shorts/5mqqDSu_Pv4?feature=share
+- Video minh chứng BT_1_b: https://youtube.com/shorts/oiRqhozpQK4?feature=share
+- Video minh chứng BT_2: https://youtube.com/shorts/KBPdj2-deFA?feature=share
+- Video minh chứng BT_3: https://youtube.com/shorts/hYrpI7WDeEU?feature=share
+- Video minh chứng BT_4: https://youtube.com/shorts/kjyHH159x74?feature=share
