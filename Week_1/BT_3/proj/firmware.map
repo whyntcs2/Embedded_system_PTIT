@@ -1,0 +1,275 @@
+
+Discarded input sections
+
+ .group         0x00000000        0xc proj/button.o
+ .group         0x00000000        0xc proj/button.o
+ .group         0x00000000        0xc proj/button.o
+ .text          0x00000000        0x0 proj/button.o
+ .data          0x00000000        0x0 proj/button.o
+ .bss           0x00000000        0x0 proj/button.o
+ .group         0x00000000        0xc proj/led.o
+ .group         0x00000000        0xc proj/led.o
+ .group         0x00000000        0xc proj/led.o
+ .text          0x00000000        0x0 proj/led.o
+ .data          0x00000000        0x0 proj/led.o
+ .bss           0x00000000        0x0 proj/led.o
+ .debug_macro   0x00000000      0xad8 proj/led.o
+ .debug_macro   0x00000000      0x34e proj/led.o
+ .debug_macro   0x00000000       0x58 proj/led.o
+ .group         0x00000000        0xc proj/main.o
+ .group         0x00000000        0xc proj/main.o
+ .group         0x00000000        0xc proj/main.o
+ .text          0x00000000        0x0 proj/main.o
+ .data          0x00000000        0x0 proj/main.o
+ .bss           0x00000000        0x0 proj/main.o
+ .debug_macro   0x00000000      0xad8 proj/main.o
+ .debug_macro   0x00000000      0x34e proj/main.o
+ .debug_macro   0x00000000       0x58 proj/main.o
+ .group         0x00000000        0xc proj/system_stm32f10x.o
+ .group         0x00000000        0xc proj/system_stm32f10x.o
+ .group         0x00000000        0xc proj/system_stm32f10x.o
+ .text          0x00000000        0x0 proj/system_stm32f10x.o
+ .data          0x00000000        0x0 proj/system_stm32f10x.o
+ .bss           0x00000000        0x0 proj/system_stm32f10x.o
+ .debug_macro   0x00000000      0xad8 proj/system_stm32f10x.o
+ .debug_macro   0x00000000      0x34e proj/system_stm32f10x.o
+ .debug_macro   0x00000000       0x58 proj/system_stm32f10x.o
+ .text          0x00000000       0x14 proj/startup.o
+ .data          0x00000000        0x0 proj/startup.o
+ .bss           0x00000000        0x0 proj/startup.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+RAM              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD proj/button.o
+LOAD proj/led.o
+LOAD proj/main.o
+LOAD proj/system_stm32f10x.o
+LOAD proj/startup.o
+                0x20005000                        _estack = (ORIGIN (RAM) + LENGTH (RAM))
+
+.isr_vector     0x08000000      0x10c
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x10c proj/startup.o
+                0x08000000                g_pfnVectors
+
+.text           0x0800010c       0xde
+ *(.text*)
+ .text.button_cfg
+                0x0800010c       0x24 proj/button.o
+                0x0800010c                button_cfg
+ .text.button_read
+                0x08000130        0xc proj/button.o
+                0x08000130                button_read
+ .text.led_cfg  0x0800013c       0x38 proj/led.o
+                0x0800013c                led_cfg
+ .text.led_write
+                0x08000174       0x14 proj/led.o
+                0x08000174                led_write
+ .text.startup.main
+                0x08000188       0x18 proj/main.o
+                0x08000188                main
+ .text.SystemInit
+                0x080001a0        0x2 proj/system_stm32f10x.o
+                0x080001a0                SystemInit
+ *fill*         0x080001a2        0x2 
+ .text.Reset_Handler
+                0x080001a4       0x44 proj/startup.o
+                0x080001a4                Reset_Handler
+ .text.Default_Handler
+                0x080001e8        0x2 proj/startup.o
+                0x080001e8                EXTI2_IRQHandler
+                0x080001e8                DebugMon_Handler
+                0x080001e8                TIM1_CC_IRQHandler
+                0x080001e8                HardFault_Handler
+                0x080001e8                SysTick_Handler
+                0x080001e8                PVD_IRQHandler
+                0x080001e8                PendSV_Handler
+                0x080001e8                NMI_Handler
+                0x080001e8                EXTI3_IRQHandler
+                0x080001e8                EXTI0_IRQHandler
+                0x080001e8                I2C2_EV_IRQHandler
+                0x080001e8                UsageFault_Handler
+                0x080001e8                ADC1_2_IRQHandler
+                0x080001e8                SPI1_IRQHandler
+                0x080001e8                TAMPER_IRQHandler
+                0x080001e8                DMA1_Channel4_IRQHandler
+                0x080001e8                USART3_IRQHandler
+                0x080001e8                RTC_IRQHandler
+                0x080001e8                DMA1_Channel7_IRQHandler
+                0x080001e8                CAN1_RX1_IRQHandler
+                0x080001e8                TIM4_IRQHandler
+                0x080001e8                I2C1_EV_IRQHandler
+                0x080001e8                DMA1_Channel6_IRQHandler
+                0x080001e8                TIM3_IRQHandler
+                0x080001e8                RCC_IRQHandler
+                0x080001e8                TIM1_TRG_COM_IRQHandler
+                0x080001e8                DMA1_Channel1_IRQHandler
+                0x080001e8                Default_Handler
+                0x080001e8                EXTI15_10_IRQHandler
+                0x080001e8                EXTI9_5_IRQHandler
+                0x080001e8                SPI2_IRQHandler
+                0x080001e8                MemManage_Handler
+                0x080001e8                SVC_Handler
+                0x080001e8                DMA1_Channel5_IRQHandler
+                0x080001e8                EXTI4_IRQHandler
+                0x080001e8                USB_LP_CAN1_RX0_IRQHandler
+                0x080001e8                USB_HP_CAN1_TX_IRQHandler
+                0x080001e8                DMA1_Channel3_IRQHandler
+                0x080001e8                TIM1_UP_IRQHandler
+                0x080001e8                WWDG_IRQHandler
+                0x080001e8                TIM2_IRQHandler
+                0x080001e8                TIM1_BRK_IRQHandler
+                0x080001e8                EXTI1_IRQHandler
+                0x080001e8                RTCAlarm_IRQHandler
+                0x080001e8                USART2_IRQHandler
+                0x080001e8                I2C2_ER_IRQHandler
+                0x080001e8                DMA1_Channel2_IRQHandler
+                0x080001e8                CAN1_SCE_IRQHandler
+                0x080001e8                FLASH_IRQHandler
+                0x080001e8                BusFault_Handler
+                0x080001e8                USART1_IRQHandler
+                0x080001e8                I2C1_ER_IRQHandler
+                0x080001e8                USBWakeUp_IRQHandler
+ *(.rodata*)
+ *(.glue_7)
+ .glue_7        0x080001ea        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x080001ea        0x0 linker stubs
+ *(.init)
+ *(.fini)
+
+.vfp11_veneer   0x080001ec        0x0
+ .vfp11_veneer  0x080001ec        0x0 linker stubs
+
+.v4_bx          0x080001ec        0x0
+ .v4_bx         0x080001ec        0x0 linker stubs
+
+.iplt           0x080001ec        0x0
+ .iplt          0x080001ec        0x0 proj/main.o
+
+.rel.dyn        0x080001ec        0x0
+ .rel.iplt      0x080001ec        0x0 proj/main.o
+
+.ARM.extab
+ *(.ARM.extab*)
+
+.ARM.exidx
+ *(.ARM.exidx*)
+                0x080001ea                        _sidata = LOADADDR (.data)
+
+.data           0x20000000        0x0 load address 0x080001ea
+                0x20000000                        _sdata = .
+ *(.data*)
+                0x20000000                        _edata = .
+
+.igot.plt       0x20000000        0x0 load address 0x080001ea
+ .igot.plt      0x20000000        0x0 proj/main.o
+
+.bss            0x20000000        0x0 load address 0x080001ea
+                0x20000000                        _sbss = .
+ *(.bss*)
+ *(COMMON)
+                0x20000000                        _ebss = .
+OUTPUT(proj/firmware.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000      0x54a
+ .debug_info    0x00000000      0x198 proj/button.o
+ .debug_info    0x00000198      0x229 proj/led.o
+ .debug_info    0x000003c1      0x106 proj/main.o
+ .debug_info    0x000004c7       0x83 proj/system_stm32f10x.o
+
+.debug_abbrev   0x00000000      0x290
+ .debug_abbrev  0x00000000       0xad proj/button.o
+ .debug_abbrev  0x000000ad       0xe3 proj/led.o
+ .debug_abbrev  0x00000190       0xbb proj/main.o
+ .debug_abbrev  0x0000024b       0x45 proj/system_stm32f10x.o
+
+.debug_aranges  0x00000000       0x90
+ .debug_aranges
+                0x00000000       0x28 proj/button.o
+ .debug_aranges
+                0x00000028       0x28 proj/led.o
+ .debug_aranges
+                0x00000050       0x20 proj/main.o
+ .debug_aranges
+                0x00000070       0x20 proj/system_stm32f10x.o
+
+.debug_rnglists
+                0x00000000       0x58
+ .debug_rnglists
+                0x00000000       0x19 proj/button.o
+ .debug_rnglists
+                0x00000019       0x19 proj/led.o
+ .debug_rnglists
+                0x00000032       0x13 proj/main.o
+ .debug_rnglists
+                0x00000045       0x13 proj/system_stm32f10x.o
+
+.debug_macro    0x00000000      0xf76
+ .debug_macro   0x00000000       0x3d proj/button.o
+ .debug_macro   0x0000003d      0xad8 proj/button.o
+ .debug_macro   0x00000b15      0x34e proj/button.o
+ .debug_macro   0x00000e63       0x58 proj/button.o
+ .debug_macro   0x00000ebb       0x3d proj/led.o
+ .debug_macro   0x00000ef8       0x4b proj/main.o
+ .debug_macro   0x00000f43       0x33 proj/system_stm32f10x.o
+
+.debug_line     0x00000000      0x45d
+ .debug_line    0x00000000      0x11d proj/button.o
+ .debug_line    0x0000011d      0x141 proj/led.o
+ .debug_line    0x0000025e      0x11e proj/main.o
+ .debug_line    0x0000037c       0xe1 proj/system_stm32f10x.o
+
+.debug_str      0x00000000     0x3b12
+ .debug_str     0x00000000     0x3b12 proj/button.o
+                               0x3bd9 (size before relaxing)
+ .debug_str     0x00003b12        0x0 proj/led.o
+                               0x3c01 (size before relaxing)
+ .debug_str     0x00003b12        0x0 proj/main.o
+                               0x3baf (size before relaxing)
+ .debug_str     0x00003b12        0x0 proj/system_stm32f10x.o
+                               0x3b64 (size before relaxing)
+
+.comment        0x00000000       0x45
+ .comment       0x00000000       0x45 proj/button.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045        0x0 proj/led.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045        0x0 proj/main.o
+                                 0x46 (size before relaxing)
+ .comment       0x00000045        0x0 proj/system_stm32f10x.o
+                                 0x46 (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x2b
+ .ARM.attributes
+                0x00000000       0x2d proj/button.o
+ .ARM.attributes
+                0x0000002d       0x2d proj/led.o
+ .ARM.attributes
+                0x0000005a       0x2d proj/main.o
+ .ARM.attributes
+                0x00000087       0x2d proj/system_stm32f10x.o
+ .ARM.attributes
+                0x000000b4       0x21 proj/startup.o
+
+.debug_frame    0x00000000       0xa8
+ .debug_frame   0x00000000       0x30 proj/button.o
+ .debug_frame   0x00000030       0x30 proj/led.o
+ .debug_frame   0x00000060       0x28 proj/main.o
+ .debug_frame   0x00000088       0x20 proj/system_stm32f10x.o
+
+.debug_loclists
+                0x00000000       0x55
+ .debug_loclists
+                0x00000000       0x17 proj/led.o
+ .debug_loclists
+                0x00000017       0x3e proj/main.o
