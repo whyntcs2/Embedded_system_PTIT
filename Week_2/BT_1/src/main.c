@@ -6,7 +6,6 @@
 #include "uart.h"
 
 
-
 int main(){
     uart_cfg();
     while(1){

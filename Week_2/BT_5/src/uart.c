@@ -44,27 +44,90 @@ void uart_cfg(void){
     USART_Cmd(USART1, ENABLE);
 }
 
-void prepare_tx_buffer(void)
+
+void command(void)
 {
-    char prefix[] = "ELE1415-20261-01_nhom1:";
-    uint16_t i = 0;
+    if (rx_buffer[0] == 'O' && rx_buffer[1] == 'N' && rx_buffer[2] == '\0'){
+        ledstate = 1;
+        change_duty(pwmstate);
+    }
+
+    else if (rx_buffer[0] == 'O' && rx_buffer[1] == 'F' && rx_buffer[2] == 'F' && rx_buffer[3] == '\0'){
+        ledstate = 0;
+        change_duty(0);
+    }
+
+    else if (rx_buffer[0] == 'P' && rx_buffer[1] == 'W' && rx_buffer[2] == 'M' && rx_buffer[3] == ':'){
+        uint16_t value = 0;
+        uint8_t i = 4;
+        while (rx_buffer[i] >= '0' && rx_buffer[i] <= '9'){
+            value = value * 10 + (rx_buffer[i] - '0');
+            i++;
+        }
+        if (i > 4 && rx_buffer[i] == '%' && rx_buffer[i + 1] == '\0' && value <= 100){
+            pwmstate = value;
+            if (ledstate == 1){
+                change_duty(pwmstate);
+            }
+        }
+    }
+    else if (rx_buffer[0] == 'S' && rx_buffer[1] == 't' && rx_buffer[2] == 'a' && rx_buffer[3] == 't' && rx_buffer[4] == 'u' && rx_buffer[5] == 's' && rx_buffer[6] == '\0') {
+        prepare_status();
+        tx_index = 0;
+        USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+    }
+}
+
+void prepare_status(void)
+{
     uint16_t j = 0;
+    tx_buffer[j++] = 'L';
+    tx_buffer[j++] = 'E';
+    tx_buffer[j++] = 'D';
+    tx_buffer[j++] = ':';
 
-    while (prefix[i] != '\0')
+    if (ledstate == 1)
     {
-        tx_buffer[j++] = prefix[i++];
+        tx_buffer[j++] = 'O';
+        tx_buffer[j++] = 'N';
+    }
+    else
+    {
+        tx_buffer[j++] = 'O';
+        tx_buffer[j++] = 'F';
+        tx_buffer[j++] = 'F';
     }
 
-    i = 0;
-    while (rx_buffer[i] != '\0')
+    tx_buffer[j++] = ' ';
+
+    tx_buffer[j++] = 'P';
+    tx_buffer[j++] = 'W';
+    tx_buffer[j++] = 'M';
+    tx_buffer[j++] = ':';
+
+    if (pwmstate == 100)
     {
-        tx_buffer[j++] = rx_buffer[i++];
+        tx_buffer[j++] = '1';
+        tx_buffer[j++] = '0';
+        tx_buffer[j++] = '0';
+    }
+    else if (pwmstate >= 10)
+    {
+        tx_buffer[j++] = (pwmstate / 10) + '0';
+        tx_buffer[j++] = (pwmstate % 10) + '0';
+    }
+    else
+    {
+        tx_buffer[j++] = pwmstate + '0';
     }
 
-    tx_buffer[j++] = '\n';
+    tx_buffer[j++] = '%';
+
     tx_buffer[j++] = '\r';
+    tx_buffer[j++] = '\n';
 
     tx_buffer[j] = '\0';
+
     tx_length = j;
 }
 
@@ -77,9 +140,8 @@ void USART1_IRQHandler(void)
         if (data == '!')
         {
             rx_buffer[rx_index] = '\0';
-            prepare_tx_buffer();
-            tx_index = 0;
-            USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+            command();
+            rx_index = 0;
         }
         else
         {
@@ -99,7 +161,6 @@ void USART1_IRQHandler(void)
         else
         {
             USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
-            rx_index = 0;
             tx_index = 0;
             tx_length = 0;
         }
