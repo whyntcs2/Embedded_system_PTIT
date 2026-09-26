@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "STM32F103C8T6",
+            "compilerPath": "/opt/arm-gnu-toolchain/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "intelliSenseMode": "gcc-arm",
+
+            "defines": [
+                "STM32F10X_MD",
+                "USE_STDPERIPH_DRIVER"
+            ],
+
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}
