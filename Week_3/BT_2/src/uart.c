@@ -8,19 +8,16 @@ volatile uint16_t tx_index = 0;
 volatile uint16_t tx_length = 0;
 
 void uart_cfg(void){
-    // Cấu hình GPIO
     GPIO_InitTypeDef UART;
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_USART1, ENABLE);
     UART.GPIO_Pin = GPIO_Pin_9;
     UART.GPIO_Mode = GPIO_Mode_AF_PP;
     UART.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA, &UART);
-
     UART.GPIO_Pin = GPIO_Pin_10;
     UART.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOA, &UART);
 
-    // Cấu hình UART
     USART_InitTypeDef uart;
     uart.USART_BaudRate = 115200;
     uart.USART_WordLength = USART_WordLength_8b;
@@ -29,18 +26,15 @@ void uart_cfg(void){
     uart.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     uart.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
     USART_Init(USART1, &uart);
-
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 
-    // Cấu hình NVIC
+  
     NVIC_InitTypeDef nvic;
     nvic.NVIC_IRQChannel = USART1_IRQn;
     nvic.NVIC_IRQChannelPreemptionPriority = 0;
     nvic.NVIC_IRQChannelSubPriority = 0;
     nvic.NVIC_IRQChannelCmd = ENABLE;
-
     NVIC_Init(&nvic);
-
     USART_Cmd(USART1, ENABLE);
 }
 
@@ -66,7 +60,6 @@ void USART1_IRQHandler(void)
         else
         {
             USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
-            rx_index = 0;
             tx_index = 0;
             tx_length = 0;
         }
