@@ -1,0 +1,25 @@
+STM32F103C8T6 Project Requirements
+
+1. ARM GNU Toolchain
+   arm-none-eabi-gcc
+   arm-none-eabi-objcopy
+   arm-none-eabi-size
+
+2. GNU Make
+
+3. OpenOCD
+   xPack OpenOCD 0.12.0-7
+
+4. Git
+
+5. STM32CubeF1
+   Repository:
+   https://github.com/STMicroelectronics/STM32CubeF1.git
+
+   Project only uses CMSIS files from STM32CubeF1.
+   HAL and StdPeriph libraries are not used.
+
+6. Python 3
+
+7. Python package
+   pyserial
