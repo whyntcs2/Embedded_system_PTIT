@@ -1,7 +1,0 @@
-STM32F103C8T6 — Bài tập 03
-
-- CMSIS register-level, không dùng HAL/StdPeriph.
-- Input: PA0..PA7 (input pull-down nội, mặc định LOW).
-- LED output: PA8..PA12, PB13, PB12, PA15.
-- Mapping: PA0..PA4 -> PA8..PA12; PA5 -> PB13; PA6 -> PB12; PA7 -> PA15.
-- Dữ liệu trước khi xuất được đảo từng bit.
